@@ -5,10 +5,17 @@ import { allProductSlugsQuery, allCategorySlugsQuery } from '@/sanity/lib/querie
 const BASE_URL = 'https://mioracandles.in'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [productSlugs, categorySlugs] = await Promise.all([
-    client.fetch<{ slug: string }[]>(allProductSlugsQuery),
-    client.fetch<{ slug: string }[]>(allCategorySlugsQuery),
-  ])
+  let productSlugs: { slug: string }[] = []
+  let categorySlugs: { slug: string }[] = []
+
+  try {
+    ;[productSlugs, categorySlugs] = await Promise.all([
+      client.fetch<{ slug: string }[]>(allProductSlugsQuery),
+      client.fetch<{ slug: string }[]>(allCategorySlugsQuery),
+    ])
+  } catch {
+    // Return only static routes if Sanity is unreachable at build time
+  }
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {

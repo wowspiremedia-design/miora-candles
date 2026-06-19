@@ -12,8 +12,12 @@ import type { Product } from '@/types'
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch<{ slug: string }[]>(allProductSlugsQuery)
-  return slugs.map((s) => ({ slug: s.slug }))
+  try {
+    const slugs = await client.fetch<{ slug: string }[]>(allProductSlugsQuery)
+    return slugs.map((s) => ({ slug: s.slug }))
+  } catch {
+    return []
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
