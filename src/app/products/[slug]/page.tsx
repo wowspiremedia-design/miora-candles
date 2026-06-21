@@ -54,9 +54,7 @@ export default async function ProductPage({ params }: Props) {
     '@type': 'Product',
     name: product.name,
     description: product.shortDescription,
-    image: product.images?.map((img) =>
-      urlFor(img).width(800).height(800).url()
-    ),
+    image: product.images?.map((img) => urlFor(img).width(800).height(800).url()),
     brand: { '@type': 'Brand', name: 'Miora Candles' },
     offers: {
       '@type': 'Offer',
@@ -84,35 +82,32 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
 
-      <div className="bg-page-bg">
-        {/* Breadcrumb */}
-        <div className="border-b border-border bg-section-alt py-3">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <nav className="flex items-center gap-2 font-body text-sm text-secondary">
-              <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-              <span>/</span>
-              {product.categorySlug && product.categoryName ? (
-                <>
-                  <Link
-                    href={`/categories/${product.categorySlug}`}
-                    className="hover:text-gold transition-colors"
-                  >
-                    {product.categoryName}
-                  </Link>
-                  <span>/</span>
-                </>
-              ) : (
-                <>
-                  <Link href="/categories" className="hover:text-gold transition-colors">Shop</Link>
-                  <span>/</span>
-                </>
-              )}
-              <span className="text-primary">{product.name}</span>
-            </nav>
-          </div>
+      {/* Breadcrumb */}
+      <div className="py-3" style={{ background: '#FDF0EC', borderBottom: '1px solid rgba(200,146,42,0.12)' }}>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <nav className="flex items-center gap-2 font-body text-sm text-secondary">
+            <Link href="/" className="transition-colors duration-300 hover:text-gold">Home</Link>
+            <span>/</span>
+            {product.categorySlug && product.categoryName ? (
+              <>
+                <Link href={`/categories/${product.categorySlug}`} className="transition-colors duration-300 hover:text-gold">
+                  {product.categoryName}
+                </Link>
+                <span>/</span>
+              </>
+            ) : (
+              <>
+                <Link href="/categories" className="transition-colors duration-300 hover:text-gold">Shop</Link>
+                <span>/</span>
+              </>
+            )}
+            <span className="text-primary">{product.name}</span>
+          </nav>
         </div>
+      </div>
 
-        {/* Product detail */}
+      {/* Product hero — blush to ivory gradient */}
+      <div style={{ background: 'linear-gradient(135deg, #F2C4C4 0%, #FAF8F5 60%, #EEF6FD 100%)' }}>
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             {/* Images */}
@@ -124,7 +119,13 @@ export default async function ProductPage({ params }: Props) {
               {product.categoryName && product.categorySlug && (
                 <Link
                   href={`/categories/${product.categorySlug}`}
-                  className="inline-flex w-fit items-center rounded-full border border-gold/30 bg-gold/10 px-3 py-1 font-body text-xs font-medium text-gold transition-colors hover:bg-gold/20"
+                  className="inline-flex w-fit items-center font-body text-xs font-medium text-gold transition-colors duration-300 hover:text-gold"
+                  style={{
+                    background: 'rgba(200,146,42,0.1)',
+                    border: '1px solid rgba(200,146,42,0.3)',
+                    borderRadius: '20px',
+                    padding: '4px 12px',
+                  }}
                 >
                   {product.categoryName}
                 </Link>
@@ -139,7 +140,10 @@ export default async function ProductPage({ params }: Props) {
                   ₹{product.price.toLocaleString('en-IN')}
                 </p>
                 {!product.inStock && (
-                  <span className="mt-2 inline-block rounded-full bg-red-50 px-3 py-1 font-body text-xs font-medium text-red-600">
+                  <span
+                    className="mt-2 inline-block font-body text-xs font-medium"
+                    style={{ background: '#FFF0F0', color: '#C0392B', borderRadius: '20px', padding: '4px 12px' }}
+                  >
                     Currently Out of Stock
                   </span>
                 )}
@@ -152,23 +156,21 @@ export default async function ProductPage({ params }: Props) {
                 </p>
               )}
 
-              {/* Product details table */}
+              {/* Product details */}
               {details.some((d) => d.value) && (
-                <div className="rounded-xl border border-border bg-section-alt p-4">
+                <div
+                  className="glass-panel p-4"
+                >
                   <h2 className="font-heading mb-3 text-lg font-semibold text-primary">
                     Product Details
                   </h2>
                   <dl className="grid gap-2">
-                    {details
-                      .filter((d) => d.value)
-                      .map((d) => (
-                        <div key={d.label} className="flex items-start gap-3">
-                          <dt className="font-body w-32 flex-shrink-0 text-sm font-medium text-secondary">
-                            {d.label}
-                          </dt>
-                          <dd className="font-body text-sm text-primary">{d.value}</dd>
-                        </div>
-                      ))}
+                    {details.filter((d) => d.value).map((d) => (
+                      <div key={d.label} className="flex items-start gap-3">
+                        <dt className="font-body w-32 flex-shrink-0 text-sm font-medium text-secondary">{d.label}</dt>
+                        <dd className="font-body text-sm text-primary">{d.value}</dd>
+                      </div>
+                    ))}
                   </dl>
                 </div>
               )}
@@ -190,7 +192,10 @@ export default async function ProductPage({ params }: Props) {
 
           {/* Full description */}
           {product.fullDescription && (
-            <div className="mt-16 border-t border-border pt-12">
+            <div
+              className="mt-16 pt-12"
+              style={{ borderTop: '1px solid rgba(200,146,42,0.15)' }}
+            >
               <h2 className="font-heading mb-6 text-3xl font-light text-primary">
                 About This Candle
               </h2>

@@ -1,19 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colour palette */
-  --color-page-bg: #FDFAF5;
-  --color-section-alt: #F5EFE4;
-  --color-card: #FFFFFF;
-  --color-primary: #1A1208;
-  --color-secondary: #7A6E60;
+  /* New luxury palette */
+  --color-ivory: #FAF8F5;
+  --color-ivory-alt: #FDF0EC;
+  --color-blush: #F2C4C4;
+  --color-blush-dark: #E8A0A0;
+  --color-sky: #C8DFF0;
+  --color-sky-light: #EEF6FD;
   --color-gold: #C8922A;
   --color-gold-light: #E8C060;
-  --color-border: #E8DDD0;
-  --color-cta: #1A1208;
-  --color-cta-hover: #C8922A;
+  --color-primary: #1A1208;
+  --color-secondary: #7A6E60;
 
-  /* Typography */
+  /* Legacy aliases — keep so old utility classes still resolve */
+  --color-page-bg: #FAF8F5;
+  --color-section-alt: #FDF0EC;
+  --color-card: #FFFFFF;
+  --color-border: #E8DDD0;
+
   --font-heading: var(--font-cormorant);
   --font-body: var(--font-dm-sans);
 }
@@ -23,7 +28,8 @@ html {
 }
 
 body {
-  background-color: #FDFAF5;
+  background: linear-gradient(135deg, #FDF0EC 0%, #FAF8F5 40%, #FAF8F5 60%, #EEF6FD 100%);
+  background-attachment: fixed;
   color: #1A1208;
   font-family: var(--font-dm-sans), system-ui, sans-serif;
 }
@@ -40,4 +46,69 @@ h1, h2, h3, h4, h5, h6 {
 
 .marquee-wrapper:hover .marquee-track {
   animation-play-state: paused;
+}
+
+/* ── Gold gradient text ── */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #C8922A 0%, #E8C060 50%, #C8922A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Category glassmorphism card ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(242, 196, 196, 0.2);
+  transition: all 0.4s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(242, 196, 196, 0.35);
+  border-color: rgba(200, 146, 42, 0.3);
+}
+
+/* ── Product glassmorphism card with inner glow ── */
+.product-glass-card {
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(242, 196, 196, 0.2);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: radial-gradient(circle at 50% 0%, rgba(242, 196, 196, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.product-glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(242, 196, 196, 0.30);
+}
+
+/* ── Utility glass panel (enquiry box, filter bar, contact cards) ── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(242, 196, 196, 0.15);
 }

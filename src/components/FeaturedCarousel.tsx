@@ -28,15 +28,12 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
     setScrollIndex(clamped)
     if (trackRef.current) {
       const card = trackRef.current.children[clamped] as HTMLElement
-      if (card) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
-      }
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
     }
   }
 
   return (
     <div className="relative">
-      {/* Carousel track */}
       <div
         ref={trackRef}
         className="flex gap-6 overflow-x-auto scroll-smooth pb-4 snap-x snap-mandatory"
@@ -52,30 +49,50 @@ export default function FeaturedCarousel({ products }: FeaturedCarouselProps) {
         ))}
       </div>
 
-      {/* Navigation arrows — show on md+ when there are enough products */}
       {products.length > itemsPerView && (
-        <div className="mt-6 flex items-center justify-center gap-3">
+        <div className="mt-8 flex items-center justify-center gap-4">
           <button
             onClick={() => scrollTo(scrollIndex - 1)}
             disabled={scrollIndex === 0}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm transition-colors hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex h-11 w-11 items-center justify-center font-body text-secondary transition-all duration-300 hover:text-gold disabled:cursor-not-allowed disabled:opacity-40"
+            style={{
+              background: 'rgba(255,255,255,0.6)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255,255,255,0.5)',
+              borderRadius: '50%',
+              boxShadow: '0 4px 16px rgba(242,196,196,0.2)',
+            }}
             aria-label="Previous"
           >
             ←
           </button>
-          {/* Dots */}
+
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
             <button
               key={i}
               onClick={() => scrollTo(i)}
-              className={`h-2 rounded-full transition-all ${i === scrollIndex ? 'w-6 bg-gold' : 'w-2 bg-border'}`}
+              className="h-2 rounded-full transition-all duration-300"
+              style={{
+                width: i === scrollIndex ? '24px' : '8px',
+                background: i === scrollIndex ? '#C8922A' : 'rgba(200,146,42,0.25)',
+              }}
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}
+
           <button
             onClick={() => scrollTo(scrollIndex + 1)}
             disabled={scrollIndex >= maxIndex}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-primary shadow-sm transition-colors hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex h-11 w-11 items-center justify-center font-body text-secondary transition-all duration-300 hover:text-gold disabled:cursor-not-allowed disabled:opacity-40"
+            style={{
+              background: 'rgba(255,255,255,0.6)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(255,255,255,0.5)',
+              borderRadius: '50%',
+              boxShadow: '0 4px 16px rgba(242,196,196,0.2)',
+            }}
             aria-label="Next"
           >
             →

@@ -20,15 +20,20 @@ export default function ProductEnquiry({ productName, price, inStock }: ProductE
   const whatsappUrl = `https://wa.me/919330799407?text=${whatsappMessage}`
 
   return (
-    <div className="flex flex-col gap-4">
+    <div
+      className="glass-panel flex flex-col gap-4 p-5"
+    >
       {/* Quantity */}
       <div>
         <p className="font-body mb-2 text-sm font-medium text-secondary">Quantity</p>
-        <div className="inline-flex items-center rounded-xl border border-border">
+        <div
+          className="inline-flex items-center"
+          style={{ border: '1px solid rgba(200,146,42,0.3)', borderRadius: '10px' }}
+        >
           <button
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             disabled={qty <= 1}
-            className="px-4 py-2.5 font-body text-lg text-secondary transition-colors hover:text-gold disabled:opacity-40"
+            className="min-h-[44px] px-4 font-body text-lg text-secondary transition-colors duration-300 hover:text-gold disabled:opacity-40"
             aria-label="Decrease quantity"
           >
             −
@@ -39,7 +44,7 @@ export default function ProductEnquiry({ productName, price, inStock }: ProductE
           <button
             onClick={() => setQty((q) => Math.min(100, q + 1))}
             disabled={qty >= 100}
-            className="px-4 py-2.5 font-body text-lg text-secondary transition-colors hover:text-gold disabled:opacity-40"
+            className="min-h-[44px] px-4 font-body text-lg text-secondary transition-colors duration-300 hover:text-gold disabled:opacity-40"
             aria-label="Increase quantity"
           >
             +
@@ -49,16 +54,26 @@ export default function ProductEnquiry({ productName, price, inStock }: ProductE
 
       {/* City */}
       <div>
-        <label htmlFor="city" className="font-body mb-2 block text-sm font-medium text-secondary">
+        <label htmlFor="city-detail" className="font-body mb-2 block text-sm font-medium text-secondary">
           Your City <span className="text-gold">*</span> (for shipping estimate)
         </label>
         <input
-          id="city"
+          id="city-detail"
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
           placeholder="e.g. Mumbai, Delhi, Bengaluru"
-          className="w-full rounded-xl border border-border bg-page-bg px-4 py-3 font-body text-sm text-primary placeholder-secondary outline-none transition-colors focus:border-gold"
+          className="w-full font-body text-sm text-primary placeholder-secondary outline-none"
+          style={{
+            background: 'rgba(255,255,255,0.7)',
+            border: '1px solid rgba(200,146,42,0.2)',
+            borderRadius: '10px',
+            padding: '12px 16px',
+            minHeight: '44px',
+            transition: 'border-color 0.3s ease',
+          }}
+          onFocus={(e) => { e.currentTarget.style.borderColor = 'rgba(200,146,42,0.6)' }}
+          onBlur={(e) => { e.currentTarget.style.borderColor = 'rgba(200,146,42,0.2)' }}
         />
       </div>
 
@@ -68,11 +83,22 @@ export default function ProductEnquiry({ productName, price, inStock }: ProductE
         target="_blank"
         rel="noopener noreferrer"
         onClick={(e) => { if (!canEnquire) e.preventDefault() }}
-        className={`flex items-center justify-center gap-3 rounded-full px-6 py-4 font-body text-base font-semibold transition-colors ${
-          canEnquire
-            ? 'bg-primary text-white hover:bg-gold cursor-pointer'
-            : 'cursor-not-allowed bg-border text-secondary'
+        className={`flex min-h-[44px] items-center justify-center gap-3 font-body text-base font-semibold transition-all duration-300 ${
+          canEnquire ? 'cursor-pointer' : 'cursor-not-allowed'
         }`}
+        style={{
+          background: canEnquire ? '#1A1208' : 'rgba(232,221,208,0.6)',
+          color: canEnquire ? '#FFFFFF' : '#7A6E60',
+          borderRadius: '4px',
+          padding: '14px 24px',
+          letterSpacing: '0.5px',
+        }}
+        onMouseEnter={(e) => {
+          if (canEnquire) e.currentTarget.style.background = '#C8922A'
+        }}
+        onMouseLeave={(e) => {
+          if (canEnquire) e.currentTarget.style.background = '#1A1208'
+        }}
         title={!inStock ? 'Out of stock' : !city.trim() ? 'Please enter your city first' : 'Enquire on WhatsApp'}
       >
         <svg className="h-5 w-5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">

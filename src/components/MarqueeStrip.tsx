@@ -22,7 +22,7 @@ export default function MarqueeStrip() {
       aria-hidden="true"
       style={{
         overflow: 'hidden',
-        background: '#F5EFE4',
+        background: '#FDF0EC',
         borderTop: '1px solid #E8DDD0',
         borderBottom: '1px solid #E8DDD0',
         height: '90px',
